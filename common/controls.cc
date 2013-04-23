@@ -21,7 +21,7 @@ glm::mat4 getProjectionMatrix(){
 
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3( 0, 0, 5 ); 
+glm::vec3 position = glm::vec3( 5, 0, 15 );
 // Initial horizontal angle : toward -Z
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
@@ -75,11 +75,17 @@ bool computeMatricesFromInputs(SDL_Window *window, Uint8* state){
 	//horizontalAngle += 0;
 	//verticalAngle   += 0;
 
+  std::cout << horizontalAngle << std::endl;
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
+	//glm::vec3 direction(
+	//	cos(verticalAngle) * sin(horizontalAngle), 
+	//	sin(verticalAngle),
+	//	cos(verticalAngle) * cos(horizontalAngle)
+	//);
 	glm::vec3 direction(
-		cos(verticalAngle) * sin(horizontalAngle), 
-		sin(verticalAngle),
-		cos(verticalAngle) * cos(horizontalAngle)
+		0 ,
+		0,
+		-1
 	);
 	
 	// Right vector

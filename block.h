@@ -1,7 +1,6 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-//#include <SDL2/SDL.h>
 #include <GL/gl.h>
 
 struct GLcolor {

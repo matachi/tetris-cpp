@@ -54,7 +54,8 @@ int main(int argc, char* argv[]){
   init_opengl();
 
   // position
-  glm::vec3 position = glm::vec3( 0, 0, 5 );
+  //glm::vec3 position = glm::vec3( 0, 0, 5 );
+  //glm::vec3 position = glm::vec3( 0, 0, 0 );
   // horizontal angle : toward -Z
   float horizontalAngle = 3.14f;
   // vertical angle : 0, look at the horizon
@@ -200,8 +201,8 @@ int main(int argc, char* argv[]){
   glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
   // Camera matrix
   glm::mat4 View = glm::lookAt(
-      glm::vec3(4,3,3), // Camera is at (4,3,3), in World Space
-      glm::vec3(0,0,0), // and looks at the origin
+      glm::vec3(5,0,5), // Camera is at (4,3,3), in World Space
+      glm::vec3(5,0,0), // and looks at the origin
       glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
   );
   // Model matrix : an identity matrix (model will be at the origin)
@@ -213,6 +214,7 @@ int main(int argc, char* argv[]){
 
   SDL_Event event;
   GameModel model;
+  model.init();
   glUseProgram(programID);
   //glGetAttribLocation(programID, "vertexColor");
   //    glVertexAttrib3f(glGetAttribLocation(programID, "vertexColor"), color.r, color.g, color.b);
@@ -243,7 +245,7 @@ int main(int argc, char* argv[]){
     while (SDL_PollEvent(&event)) {}
     Uint8 *state = SDL_GetKeyboardState(NULL);
 
-    model.update(0, GameModel::UP);
+    model.update(SDL_GetTicks(), GameModel::UP);
 
     if (state[SDL_SCANCODE_ESCAPE]) {
       break;
@@ -267,8 +269,9 @@ int main(int argc, char* argv[]){
       glm::mat4 ViewMatrix = getViewMatrix();
       glm::mat4 ModelMatrix = glm::mat4(1.0);
       ModelMatrix = ModelMatrix * glm::translate(glm::mat4(1.0f),
-          glm::vec3(0.0f, 0.0f, -block->get_x()));
+          glm::vec3(block->get_x(), block->get_y(), 0.0f));
       glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
 
       // 1rst attribute buffer : vertices
       glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);

@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include <SDL2/SDL.h>
+
 class GameModel {
   public:
     enum Direction { UP, DOWN, LEFT, RIGHT };
@@ -12,13 +14,14 @@ class GameModel {
     GameModel(void);
     ~GameModel();
 
-    void update(float, Direction);
+    void init(void);
+    void update(Uint32, Direction);
     std::vector<Block*> get_blocks(void);
     static const int NUM_OF_BLOCKS = 220;
     static const int BLOCKS_IN_ROW = 10;
     static const int BLOCK_IN_COL = 22;
   private:
-    bool collides_with_grid(std::vector<Block*>);
+    bool collides_with_grid(std::vector<Block*>, std::vector<Block*>);
     void move(std::vector<Block*>, Direction);
     std::vector<Block*>* create_figure(std::vector<Block*>* blocks);
     // Create a new block and add it to a figure and the collection of all
@@ -27,8 +30,10 @@ class GameModel {
 
     std::vector<Block*> blocks_;
 
-    float clock_;
+    //float clock_;
+    Uint32 next_tick_;
     std::vector<Block*> figure_;
+    //std::vector<Block*>* figure2_;
 };
 
 #endif

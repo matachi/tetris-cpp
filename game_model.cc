@@ -4,14 +4,13 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-GameModel::GameModel(void) : blocks_(std::vector<Block*>()), clock_(0) {
-  Block* b = new Block(1,1,(GLcolor){0.1f, 0.2f, 0.4f});
+GameModel::GameModel(void) : blocks_(std::vector<Block*>()) {
+  Block* b = new Block(0,0,(GLcolor){0.1f, 0.2f, 0.4f});
   b->set_x(5);
-  blocks_.push_back(new Block(10,1,(GLcolor){0.0f, 0.0f, 0.0f}));
+  blocks_.push_back(new Block(0,0,(GLcolor){0.0f, 0.0f, 0.0f}));
   blocks_.push_back(b);
-  blocks_.push_back(new Block(1,1,(GLcolor){0.0f, 0.0f, 0.0f}));
-  //figure_ = std::vector<Block*>();
-  //figure_ = &create_figure(&blocks_);
+  blocks_.push_back(new Block(-5,0,(GLcolor){0.0f, 0.0f, 0.0f}));
+  next_tick_ = SDL_GetTicks() + 1000;
 }
 
 GameModel::~GameModel() {
@@ -22,24 +21,33 @@ GameModel::~GameModel() {
   }
 }
 
-void GameModel::update(float time, Direction direction) {
-  //std::cout << (long)&figure_ << std::endl;
-  if (&figure_ != NULL) {
-    figure_ = *create_figure(&blocks_);
-    std::cout << "......" << std::endl;
+void GameModel::init(void) {
+  // Create the first figure
+  figure_ = *create_figure(&blocks_);
+}
+
+void GameModel::update(Uint32 time, Direction direction) {
+  if (time > next_tick_) {
+    next_tick_ += 1000;
+    move(figure_, DOWN);
+    if (collides_with_grid(figure_, blocks_)) {
+      move(figure_, UP);
+    }
   }
-  //switch (direction) {
-  //  case UP:
-  //    std::cout << "UP" << std::endl;
-  //    break;
-  //  case DOWN:
-  //    move(figure_, direction);
-  //    break;
-  //  case LEFT:
-  //  case RIGHT:
-  //    move(figure_, direction);
-  //    break;
-  //}
+  switch (direction) {
+    case UP:
+      //std::cout << "UP" << std::endl;
+      break;
+    case DOWN:
+      //move(figure_, direction);
+      break;
+    case LEFT:
+    case RIGHT:
+      //move(figure_, direction);
+      break;
+    default:
+      break;
+  }
 }
 
 std::vector<Block*> GameModel::get_blocks(void) {
@@ -52,10 +60,10 @@ void GameModel::move(std::vector<Block*> figure, Direction direction) {
     Block* block = *it;
     switch (direction) {
       case UP:
-        //block->set_x(block->get_x() - 1);
+        block->set_y(block->get_y() + 1);
         break;
       case DOWN:
-        //block->set_x(block->get_x() - 1);
+        block->set_y(block->get_y() - 1);
         break;
       case LEFT:
         block->set_x(block->get_x() - 1);
@@ -67,18 +75,26 @@ void GameModel::move(std::vector<Block*> figure, Direction direction) {
   }
 }
 
-bool GameModel::collides_with_grid(std::vector<Block*> figure) {
-  for (std::vector<Block*>::iterator it = blocks_.begin(); it != blocks_.end();
+bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block*> blocks) {
+  for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
-    Block* block = *it;
-    //std::cout << (int)block->get_x() << std::endl;
+    Block* a = *it;
+    for (std::vector<Block*>::iterator it2 = blocks.begin();
+        it2 != blocks.end(); ++it2) {
+      Block* b = *it2;
+      if (a != b) {
+        if (a->get_x() == b->get_x() && a->get_y() == b->get_y()) {
+          return true;
+        }
+      }
+    }
   }
 }
 
 std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
   std::vector<Block*>* figure = new std::vector<Block*>;
   GLcolor color = {0.2f, 0.4, 0.6f};
-  create_block(2, 2, color, blocks, figure);
+  create_block(5, 5, color, blocks, figure);
 }
 
 void GameModel::create_block(int x, int y, GLcolor color,
