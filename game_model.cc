@@ -70,7 +70,7 @@ std::vector<Block*>& GameModel::get_blocks(void) {
   return blocks_;
 }
 
-void GameModel::move(std::vector<Block*> figure, Direction direction) {
+void GameModel::move(std::vector<Block*>& figure, Direction direction) {
   for (std::vector<Block*>::iterator it = figure_.begin(); it != figure_.end();
       ++it) {
     Block* block = *it;
@@ -91,7 +91,8 @@ void GameModel::move(std::vector<Block*> figure, Direction direction) {
   }
 }
 
-bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block*> blocks) {
+bool GameModel::collides_with_grid(std::vector<Block*>& figure,
+    std::vector<Block*>& blocks) {
   for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
     Block* a = *it;

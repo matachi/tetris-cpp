@@ -22,10 +22,10 @@ class GameModel {
     static const int BLOCKS_IN_COL = 22;
   private:
     // Check if the figure collides with the blocks
-    bool collides_with_grid(std::vector<Block*> figure,
-        std::vector<Block*> blocks);
+    bool collides_with_grid(std::vector<Block*>& figure,
+        std::vector<Block*>& blocks);
     // Move figure in given direction
-    void move(std::vector<Block*> figure, Direction direction);
+    void move(std::vector<Block*>& figure, Direction direction);
     // Rotate the figure 1 step clockwise
     void rotate_figure(std::vector<Block*>& figure);
     // Create a figure, returns a refernce to a new figure
