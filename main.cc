@@ -163,8 +163,7 @@ int main(int argc, char* argv[]){
     }
     previousDirection = direction;
 
-    if (computeMatricesFromInputs(window, state)) {
-    }
+    computeMatricesFromInputs(window, state);
 
     glm::mat4 projectionMatrix = getProjectionMatrix();
     glm::mat4 viewMatrix = getViewMatrix();
