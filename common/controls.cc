@@ -1,6 +1,5 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mouse.h>
-#include <iostream>
 
 // Include GLM
 #include <glm/glm.hpp>
@@ -31,8 +30,7 @@ float fov = 45.0f;
 bool fov_pressed = false;
 
 
-float speed = 5.0f; // 3 units / second
-//float mouseSpeed = 0.005f;
+float speed = 5.0f;
 float mouseSpeed = 5;
 
 double lastTime;
@@ -108,7 +106,8 @@ void computeMatricesFromInputs(SDL_Window *window, Uint8* state) {
     fov_pressed = false;
   }
 
-  // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
+  // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit
+  // <-> 100 units
   projectionMatrix = glm::perspective(fov, 4.0f / 3.0f, 0.1f, 100.0f);
   // Camera matrix
   viewMatrix = glm::lookAt(
