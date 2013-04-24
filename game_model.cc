@@ -37,14 +37,17 @@ void GameModel::update(Uint32 time, Direction direction) {
   }
   switch (direction) {
     case UP:
-      //std::cout << "UP" << std::endl;
+      rotate_figure(figure_);
       break;
     case DOWN:
-      //move(figure_, direction);
+      while (!collides_with_grid(figure_, blocks_)) {
+        move(figure_, DOWN);
+      }
+      move(figure_, UP);
       break;
     case LEFT:
     case RIGHT:
-      //move(figure_, direction);
+      move(figure_, direction);
       break;
     default:
       break;
