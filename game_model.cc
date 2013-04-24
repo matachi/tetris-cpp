@@ -198,8 +198,10 @@ void GameModel::rotate_figure(std::vector<Block*>& figure) {
 }
 
 void GameModel::delete_full_rows(std::vector<Block*>& blocks) {
+  // Check every row if any is full
   for (int y = BLOCKS_IN_COL - 1; y >= 0; --y) {
     int blocks_in_row = 0;
+    // Count number of blocks on current row
     for (std::vector<Block*>::iterator it = blocks.begin(); it != blocks.end();
         ++it) {
       Block* block = *it;
@@ -207,7 +209,22 @@ void GameModel::delete_full_rows(std::vector<Block*>& blocks) {
         ++blocks_in_row;
       }
     }
+    // If row is full
     if (blocks_in_row == BLOCKS_IN_ROW) {
+      // Delete all blocks on the current row
+      std::vector<Block*>::iterator it = blocks.begin();
+      while (it != blocks.end()) {
+        Block* block = *it;
+        if (block->get_y() == y) {
+          // Free memory of the block
+          delete block;
+          // Erase the block entry from the collection
+          blocks.erase(it);
+        } else {
+          ++it;
+        }
+      }
+      // Move down all blocks above the current row
       move_down_blocks_above_level(blocks, y);
     }
   }
