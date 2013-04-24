@@ -6,11 +6,6 @@
 #include <SDL2/SDL.h>
 
 GameModel::GameModel(void) : blocks_(std::vector<Block*>()) {
-  Block* b = new Block(0,0,(GLcolor){0.1f, 0.2f, 0.4f});
-  b->set_x(5);
-  blocks_.push_back(new Block(0,0,(GLcolor){0.0f, 0.0f, 0.0f}));
-  blocks_.push_back(b);
-  blocks_.push_back(new Block(-5,0,(GLcolor){0.0f, 0.0f, 0.0f}));
   next_tick_ = SDL_GetTicks() + 1000;
 }
 
@@ -43,6 +38,7 @@ void GameModel::update(Uint32 time, Direction direction) {
       }
       move(figure_, UP);
       figure_ = *create_figure(&blocks_);
+      delete_full_rows(blocks_);
       break;
     case LEFT:
       move(figure_, LEFT);
@@ -63,11 +59,11 @@ void GameModel::update(Uint32 time, Direction direction) {
         if (collides_with_grid(figure_, blocks_)) {
           move(figure_, UP);
           figure_ = *create_figure(&blocks_);
+          delete_full_rows(blocks_);
         }
       }
       break;
   }
-  delete_full_rows(blocks_);
 }
 
 std::vector<Block*> GameModel::get_blocks(void) {
@@ -152,21 +148,21 @@ std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
       create_block(6, 21, color, blocks, figure);
       break;
     case 4:
-      color = {0.8f, 0.4, 0.6f};
+      color = {0.8f, 0.2, 0.6f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       break;
     case 5:
-      color = {0.8f, 0.4, 0.6f};
+      color = {0.2f, 0.2, 0.6f};
       create_block(6, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       break;
     case 6:
-      color = {0.8f, 0.4, 0.6f};
+      color = {0.4f, 0.2, 0.2f};
       create_block(4, 20, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
