@@ -48,6 +48,7 @@ void GameModel::update(Uint32 time, Direction direction) {
     default:
       break;
   }
+  delete_full_rows(blocks_);
 }
 
 std::vector<Block*> GameModel::get_blocks(void) {
@@ -94,52 +95,54 @@ bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block
 std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
   std::vector<Block*>* figure = new std::vector<Block*>;
   int i = 2;
+  GLcolor color;
   switch (i) {
     case 1: // Square
-      GLcolor color = {0.2f, 0.4, 0.6f};
+      color = {0.2f, 0.4, 0.6f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(4, 20, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       break;
     case 2: // 4 line
-      GLcolor color = {0.8f, 0.4, 0.6f};
+      color = {0.8f, 0.4, 0.6f};
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       create_block(5, 18, color, blocks, figure);
       break;
     case 3:
-      GLcolor color = {0.8f, 0.4, 0.2f};
+      color = {0.8f, 0.4, 0.2f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(6, 20, color, blocks, figure);
       break;
     case 4:
-      GLcolor color = {0.2f, 0.4, 0.2f};
+      color = {0.2f, 0.4, 0.2f};
       create_block(4, 20, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(6, 21, color, blocks, figure);
       break;
     case 5:
-      GLcolor color = {0.8f, 0.4, 0.6f};
+      color = {0.8f, 0.4, 0.6f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       break;
     case 6:
-      GLcolor color = {0.8f, 0.4, 0.6f};
+      color = {0.8f, 0.4, 0.6f};
       create_block(6, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       break;
+  }
 }
 
-void rotate_figuare(std::vector<Block*>* figure) {
+void GameModel::rotate_figure(std::vector<Block*>& figure) {
   int max_x = -1, min_x = 100, max_y = -1, min_y = 100;
   for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
@@ -152,6 +155,33 @@ void rotate_figuare(std::vector<Block*>* figure) {
   for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
    //t 
+  }
+}
+
+void GameModel::delete_full_rows(std::vector<Block*>& blocks) {
+  for (int y = BLOCKS_IN_COL - 1; y >= 0; --y) {
+    int blocks_in_row = 0;
+    for (std::vector<Block*>::iterator it = blocks.begin(); it != blocks.end();
+        ++it) {
+      Block* block = *it;
+      if (block->get_y() == y) {
+        ++blocks_in_row;
+      }
+    }
+    if (blocks_in_row == BLOCKS_IN_ROW) {
+      move_down_blocks_above_level(blocks, y);
+    }
+  }
+}
+
+void GameModel::move_down_blocks_above_level(std::vector<Block*>& blocks,
+    int level) {
+  for (std::vector<Block*>::iterator it = blocks.begin(); it != blocks.end();
+      ++it) {
+    Block* block = *it;
+    if (block->get_y() > level) {
+      block->set_y(block->get_y() - 1);
+    }
   }
 }
 

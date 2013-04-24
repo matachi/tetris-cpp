@@ -251,6 +251,9 @@ int main(int argc, char* argv[]){
       break;
     }
 
+    glm::mat4 ProjectionMatrix = getProjectionMatrix();
+    glm::mat4 ViewMatrix = getViewMatrix();
+
     //GameModel::Direction a = GameModel::UP;
     //model.update(0, GameModel::UP);
     //model.update(0, GameModel::UP);
@@ -262,28 +265,20 @@ int main(int argc, char* argv[]){
       Block* block = *it;
 
       if (computeMatricesFromInputs(window, state)) {
-      //if (computeMatricesFromInputs(window, state)) {
         break;
       }
-      glm::mat4 ProjectionMatrix = getProjectionMatrix();
-      glm::mat4 ViewMatrix = getViewMatrix();
       glm::mat4 ModelMatrix = glm::mat4(1.0);
       ModelMatrix = ModelMatrix * glm::translate(glm::mat4(1.0f),
           glm::vec3(block->get_x(), block->get_y(), 0.0f));
       glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
-
 
       // 1rst attribute buffer : vertices
       glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
       glBindVertexArray(VertexArrayID);
       GLcolor color = block->get_color();
-      //cout << (Uint8)color.r << endl;
       glUniform3f(vertexColor, color.r, color.g, color.b);
-      //glVertexAttrib3f(vertexColor, color.r, color.g, color.b);
-  //cout << "test" << endl;
       glDrawArrays(GL_TRIANGLES, 0, 3 * 12);
-      //cout << glGetError() << endl;
       glBindVertexArray(0);
     }
     SDL_GL_SwapWindow(window);

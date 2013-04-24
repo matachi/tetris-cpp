@@ -19,12 +19,15 @@ class GameModel {
     std::vector<Block*> get_blocks(void);
     static const int NUM_OF_BLOCKS = 220;
     static const int BLOCKS_IN_ROW = 10;
-    static const int BLOCK_IN_COL = 22;
+    static const int BLOCKS_IN_COL = 22;
   private:
     bool collides_with_grid(std::vector<Block*>, std::vector<Block*>);
     void move(std::vector<Block*>, Direction);
-    void rotate_figure(std::vector<Block*>);
+    void rotate_figure(std::vector<Block*>&);
     std::vector<Block*>* create_figure(std::vector<Block*>* blocks);
+    void delete_full_rows(std::vector<Block*>& blocks);
+    void move_down_blocks_above_level(std::vector<Block*>& blocks, int level);
+
     // Create a new block and add it to a figure and the collection of all
     // blocks.
     void create_block(int x, int y, GLcolor color, std::vector<Block*>* blocks, std::vector<Block*>* figure);
