@@ -8,15 +8,16 @@
 //using namespace glm;
 
 #include "controls.hpp"
+#include <math.h>
 
 glm::mat4 ViewMatrix;
 glm::mat4 ProjectionMatrix;
 
 glm::mat4 getViewMatrix(){
-	return ViewMatrix;
+  return ViewMatrix;
 }
 glm::mat4 getProjectionMatrix(){
-	return ProjectionMatrix;
+  return ProjectionMatrix;
 }
 
 
@@ -53,8 +54,8 @@ bool computeMatricesFromInputs(SDL_Window *window, Uint8* state){
 
   //SDL_PollEvent(&event);
 
-	// Get mouse position
-	int xpos, ypos;
+  // Get mouse position
+  int xpos, ypos;
   SDL_GetMouseState(&xpos, &ypos);
 
   //xpos = 0;
@@ -72,36 +73,28 @@ bool computeMatricesFromInputs(SDL_Window *window, Uint8* state){
 	//horizontalAngle += mouseSpeed * deltaTime * float(800/2 - xpos );
 	//verticalAngle   += mouseSpeed * deltaTime * float(600/2 - ypos );
     //std::cout << mouseSpeed * deltaTime * float(800/2 - xpos ) << std::endl;
-	//horizontalAngle += 0;
-	//verticalAngle   += 0;
 
-  std::cout << horizontalAngle << std::endl;
-	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	//glm::vec3 direction(
-	//	cos(verticalAngle) * sin(horizontalAngle), 
-	//	sin(verticalAngle),
-	//	cos(verticalAngle) * cos(horizontalAngle)
-	//);
-	glm::vec3 direction(
-		0 ,
-		0,
-		-1
-	);
-	
-	// Right vector
-	glm::vec3 right = glm::vec3(
-		sin(horizontalAngle - 3.14f/2.0f), 
-		0,
-		cos(horizontalAngle - 3.14f/2.0f)
-	);
-	
-	// Up vector
-	glm::vec3 up = glm::cross( right, direction );
+  // Direction : Spherical coordinates to Cartesian coordinates conversion
+  glm::vec3 direction(
+    cos(verticalAngle) * sin(horizontalAngle), 
+    sin(verticalAngle),
+    cos(verticalAngle) * cos(horizontalAngle)
+  );
+
+  // Right vector
+  glm::vec3 right = glm::vec3(
+    sin(horizontalAngle - 3.14f/2.0f), 
+    0,
+    cos(horizontalAngle - 3.14f/2.0f)
+  );
+
+  // Up vector
+  glm::vec3 up = glm::cross( right, direction );
 
   //Uint8 *state = SDL_GetKeyboardState(NULL);
         if (state[SDL_SCANCODE_UP]){
         //if (keys.up) {
-std::cout << "OUT" << std::endl;
+        //std::cout << "OUT" << std::endl;
           position += direction * deltaTime * speed;
         }
         // Move backward

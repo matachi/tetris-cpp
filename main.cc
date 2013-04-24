@@ -216,6 +216,7 @@ int main(int argc, char* argv[]){
   GameModel model;
   model.init();
   glUseProgram(programID);
+  GameModel::Direction previousDirection = GameModel::NONE;
   //glGetAttribLocation(programID, "vertexColor");
   //    glVertexAttrib3f(glGetAttribLocation(programID, "vertexColor"), color.r, color.g, color.b);
 
@@ -223,7 +224,6 @@ int main(int argc, char* argv[]){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Keys keys = { false, false, false, false };
-    //while (SDL_PollEvent(&event)) {
     //  if (event.key.keysym.sym == SDLK_UP){
     //    keys.up = true;
     //    std::cout << "hej" << std::endl;

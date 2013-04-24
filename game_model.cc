@@ -93,8 +93,66 @@ bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block
 
 std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
   std::vector<Block*>* figure = new std::vector<Block*>;
-  GLcolor color = {0.2f, 0.4, 0.6f};
-  create_block(5, 5, color, blocks, figure);
+  int i = 2;
+  switch (i) {
+    case 1: // Square
+      GLcolor color = {0.2f, 0.4, 0.6f};
+      create_block(4, 21, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(4, 20, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      break;
+    case 2: // 4 line
+      GLcolor color = {0.8f, 0.4, 0.6f};
+      create_block(5, 21, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(5, 19, color, blocks, figure);
+      create_block(5, 18, color, blocks, figure);
+      break;
+    case 3:
+      GLcolor color = {0.8f, 0.4, 0.2f};
+      create_block(4, 21, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(6, 20, color, blocks, figure);
+      break;
+    case 4:
+      GLcolor color = {0.2f, 0.4, 0.2f};
+      create_block(4, 20, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(6, 21, color, blocks, figure);
+      break;
+    case 5:
+      GLcolor color = {0.8f, 0.4, 0.6f};
+      create_block(4, 21, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(5, 19, color, blocks, figure);
+      break;
+    case 6:
+      GLcolor color = {0.8f, 0.4, 0.6f};
+      create_block(6, 21, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(5, 19, color, blocks, figure);
+      break;
+}
+
+void rotate_figuare(std::vector<Block*>* figure) {
+  int max_x = -1, min_x = 100, max_y = -1, min_y = 100;
+  for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
+      ++it) {
+    Block* a = *it;
+    max_x = (a->get_x() > max_x) ? a->get_x() : max_x;
+    min_x = (a->get_x() < min_x) ? a->get_x() : min_x;
+    max_y = (a->get_y() > max_y) ? a->get_y() : max_y;
+    min_y = (a->get_y() < min_y) ? a->get_y() : min_y;
+  }
+  for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
+      ++it) {
+   //t 
+  }
 }
 
 void GameModel::create_block(int x, int y, GLcolor color,

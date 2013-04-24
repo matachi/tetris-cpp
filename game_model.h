@@ -9,7 +9,7 @@
 
 class GameModel {
   public:
-    enum Direction { UP, DOWN, LEFT, RIGHT };
+    enum Direction { UP, DOWN, LEFT, RIGHT, NONE };
 
     GameModel(void);
     ~GameModel();
@@ -23,6 +23,7 @@ class GameModel {
   private:
     bool collides_with_grid(std::vector<Block*>, std::vector<Block*>);
     void move(std::vector<Block*>, Direction);
+    void rotate_figure(std::vector<Block*>);
     std::vector<Block*>* create_figure(std::vector<Block*>* blocks);
     // Create a new block and add it to a figure and the collection of all
     // blocks.
