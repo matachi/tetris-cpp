@@ -31,7 +31,7 @@ void GameModel::update(Uint32 time, Direction direction) {
   switch (direction) {
     case UP:
       rotate_figure(figure_);
-      while (!collides_with_grid(figure_, blocks_)) {
+      if (collides_with_grid(figure_, blocks_)) {
         rotate_figure(figure_);
         rotate_figure(figure_);
         rotate_figure(figure_);
@@ -185,9 +185,15 @@ void GameModel::rotate_figure(std::vector<Block*>& figure) {
     max_y = (a->get_y() > max_y) ? a->get_y() : max_y;
     min_y = (a->get_y() < min_y) ? a->get_y() : min_y;
   }
+  int width = max_x - min_x;
+  int height = max_y - min_y;
   for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
-   //t 
+    Block* a = *it;
+    int x = a->get_x();
+    int y = a->get_y();
+    a->set_y(min_y + (height - (x - min_x)));
+    a->set_x(min_x + (y - min_y));
   }
 }
 
