@@ -6,7 +6,7 @@ Daniel 'MaTachi' Jonsson
 The code is based on the n00b tutorials found on
 [opengl-tutorials.org](http://www.opengl-tutorial.org/). [Tutorial: OpenGL 3.1
 The First Triangle
-(C++/Win)](http://www.opengl.org/wiki/Tutorial:_OpenGL_3.1_The_First_Triangle_(C%2B%2B/Win))
+(C++/Win)](http://www.opengl.org/wiki/Tutorial:_OpenGL_3.1_The_First_Triangle_%28C%2B%2B/Win%29)
 was also useful.
 
 ## Compile
