@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 #include <SDL2/SDL.h>
 
 GameModel::GameModel(void) : blocks_(std::vector<Block*>()) {
@@ -117,7 +116,6 @@ std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
   std::vector<Block*>* figure = new std::vector<Block*>;
   srand(time(NULL));
   int i = rand() % 7;
-  std::cout << i << std::endl;
   GLcolor color;
   switch (i) {
     case 0: // Square
