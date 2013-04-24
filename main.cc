@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
-//#include <GL/glu.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
@@ -9,7 +8,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-using namespace glm;
 
 #include <common/shader.hpp>
 #include <common/controls.hpp>
