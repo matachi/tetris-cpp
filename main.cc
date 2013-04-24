@@ -52,8 +52,9 @@ int main(int argc, char* argv[]){
   init_opengl();
 
   // Create and compile our GLSL program from the shaders
-  GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader",
+  GLuint programId = LoadShaders( "SimpleVertexShader.vertexshader",
       "SimpleFragmentShader.fragmentshader" );
+  glUseProgram(programId);
 
   // Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive
   // vertices give a triangle.  A cube has 6 faces with 2 triangles each, so
@@ -97,41 +98,50 @@ int main(int argc, char* argv[]){
       1.0f,-1.0f, 1.0f
   };
 
-  GLuint VertexArrayID;
-  glGenVertexArrays(1, &VertexArrayID);
-  glBindVertexArray(VertexArrayID);
+  // Create a VAO
+  GLuint vertexArrayId;
+  glGenVertexArrays(1, &vertexArrayId);
+  glBindVertexArray(vertexArrayId);
 
+  // Create a VBO for the vertices
   GLuint vertexbuffer;
   glGenBuffers(1, &vertexbuffer);
   glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data),
+      g_vertex_buffer_data, GL_STATIC_DRAW);
+  GLuint index = glGetAttribLocation(programId, "vertexPosition_modelspace");
   glVertexAttribPointer(
-     glGetAttribLocation(programID, "vertexPosition_modelspace"),         // attribute 0. No particular reason for 0, but must match the layout in the shader.
+     index,     // index
      3,         // size
      GL_FLOAT,  // type
      GL_FALSE,  // normalized?
      0,         // stride
      (void*)0   // array buffer offset
   );
+
+  // End of VBO
   glEnableVertexAttribArray(0);
 
+  // End of VAO
   glBindVertexArray(0);
 
-  // Get a handle for our "MVP" uniform
-  GLuint MatrixID = glGetUniformLocation(programID, "MVP");
-  GLuint vertexColor = glGetUniformLocation(programID, "vertexColor");
-
+  // Get a handle for our "MVP" uniform and vertexColor in the vertex shader
+  GLuint matrixId = glGetUniformLocation(programId, "MVP");
+  GLuint vertexColor = glGetUniformLocation(programId, "vertexColor");
 
   SDL_Event event;
-  GameModel model;
+  GameModel model; // Create a game model
   model.init();
-  glUseProgram(programID);
+  // Keep track of previous movement direction
   GameModel::Direction previousDirection = GameModel::NONE;
 
   while (true) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // This is necessary for the inputs to not freak out
     while (SDL_PollEvent(&event)) {}
+
+    // Poll keyboard to check which keys are pressed
     Uint8 *state = SDL_GetKeyboardState(NULL);
 
     GameModel::Direction direction = GameModel::NONE;
@@ -156,27 +166,28 @@ int main(int argc, char* argv[]){
     if (computeMatricesFromInputs(window, state)) {
     }
 
+    glm::mat4 projectionMatrix = getProjectionMatrix();
+    glm::mat4 viewMatrix = getViewMatrix();
 
-    glm::mat4 ProjectionMatrix = getProjectionMatrix();
-    glm::mat4 ViewMatrix = getViewMatrix();
-
+    // Get all blocks
     std::vector<Block*> blocks = model.get_blocks();
 
+    // Draw all blocks
     for (std::vector<Block*>::iterator it = blocks.begin(); it != blocks.end();
         ++it) {
       Block* block = *it;
 
-      glm::mat4 ModelMatrix = glm::mat4(1.0);
-      ModelMatrix = ModelMatrix * glm::translate(glm::mat4(1.0f),
+      glm::mat4 modelMatrix = glm::mat4(1.0);
+      modelMatrix = modelMatrix * glm::translate(glm::mat4(1.0f),
           glm::vec3(2 * block->get_x(), 2 * block->get_y(), 0.0f));
-      glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+      glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
 
       // 1rst attribute buffer : vertices
-      glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-      glBindVertexArray(VertexArrayID);
+      glUniformMatrix4fv(matrixId, 1, GL_FALSE, &MVP[0][0]);
       GLcolor color = block->get_color();
       glUniform3f(vertexColor, color.r, color.g, color.b);
+
+      glBindVertexArray(vertexArrayId);
       glDrawArrays(GL_TRIANGLES, 0, 3 * 12);
       glBindVertexArray(0);
     }
