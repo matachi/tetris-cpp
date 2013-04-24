@@ -223,53 +223,44 @@ int main(int argc, char* argv[]){
   while (true) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //Keys keys = { false, false, false, false };
-    //  if (event.key.keysym.sym == SDLK_UP){
-    //    keys.up = true;
-    //    std::cout << "hej" << std::endl;
-    //  }
-    //  // Move backward
-    //  if (event.key.keysym.sym == SDLK_DOWN){
-    //    keys.down = true;
-    //  }
-    //  // Strafe right
-    //  if (event.key.keysym.sym == SDLK_RIGHT){
-    //    keys.right = true;
-    //  }
-    //  // Strafe left
-    //  if (event.key.keysym.sym == SDLK_LEFT){
-    //    keys.left = true;
-    //  }
-    //}
-
     while (SDL_PollEvent(&event)) {}
     Uint8 *state = SDL_GetKeyboardState(NULL);
 
-    model.update(SDL_GetTicks(), GameModel::UP);
-
-    if (state[SDL_SCANCODE_ESCAPE]) {
+    GameModel::Direction direction = GameModel::NONE;
+    if (state[SDL_SCANCODE_UP]) {
+      direction = GameModel::UP;
+    } else if (state[SDL_SCANCODE_DOWN]) {
+      direction = GameModel::DOWN;
+    } else if (state[SDL_SCANCODE_LEFT]) {
+      direction = GameModel::LEFT;
+    } else if (state[SDL_SCANCODE_RIGHT]) {
+      direction = GameModel::RIGHT;
+    } else if (state[SDL_SCANCODE_ESCAPE]) {
       break;
     }
+    if (direction != GameModel::NONE && previousDirection == GameModel::NONE) {
+      model.update(SDL_GetTicks(), direction);
+    } else {
+      model.update(SDL_GetTicks(), GameModel::NONE);
+    }
+    previousDirection = direction;
+
+    if (computeMatricesFromInputs(window, state)) {
+    }
+
 
     glm::mat4 ProjectionMatrix = getProjectionMatrix();
     glm::mat4 ViewMatrix = getViewMatrix();
 
-    //GameModel::Direction a = GameModel::UP;
-    //model.update(0, GameModel::UP);
-    //model.update(0, GameModel::UP);
-    //model.update(0, GameModel::LEFT);
-    //model.update(0, GameModel::DOWN);
     std::vector<Block*> blocks = model.get_blocks();
+
     for (std::vector<Block*>::iterator it = blocks.begin(); it != blocks.end();
         ++it) {
       Block* block = *it;
 
-      if (computeMatricesFromInputs(window, state)) {
-        break;
-      }
       glm::mat4 ModelMatrix = glm::mat4(1.0);
       ModelMatrix = ModelMatrix * glm::translate(glm::mat4(1.0f),
-          glm::vec3(block->get_x(), block->get_y(), 0.0f));
+          glm::vec3(2 * block->get_x(), 2 * block->get_y(), 0.0f));
       glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
       // 1rst attribute buffer : vertices
