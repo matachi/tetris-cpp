@@ -39,7 +39,7 @@ add_definitions(
 
 set(BUILD_SHARED_LIBRARIES OFF)
 
-### BOX2D
+### SDL
 include(ExternalProject)
 set(sdl_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/sdl")
 set(sdl_INSTALL_DIR "${CMAKE_CURRENT_BINARY_DIR}/sdl")
