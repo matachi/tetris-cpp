@@ -27,7 +27,9 @@ float horizontalAngle = 3.14f;
 // Initial vertical angle : none
 float verticalAngle = 0.0f;
 // Initial Field of View
-float initialFoV = 45.0f;
+float fov = 45.0f;
+bool fov_pressed = false;
+
 
 float speed = 5.0f; // 3 units / second
 //float mouseSpeed = 0.005f;
@@ -92,11 +94,22 @@ void computeMatricesFromInputs(SDL_Window *window, Uint8* state) {
     position -= right * deltaTime * speed;
   }
 
-  //float FoV = initialFoV - 5 * glfwGetMouseWheel();
-  float FoV = initialFoV;
+  if (state[SDL_SCANCODE_E]) {
+    if (!fov_pressed) {
+      fov += 10;
+      fov_pressed = true;
+    }
+  } else if (state[SDL_SCANCODE_Q]) {
+    if (!fov_pressed) {
+      fov -= 10;
+      fov_pressed = true;
+    }
+  } else {
+    fov_pressed = false;
+  }
 
   // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-  projectionMatrix = glm::perspective(FoV, 4.0f / 3.0f, 0.1f, 100.0f);
+  projectionMatrix = glm::perspective(fov, 4.0f / 3.0f, 0.1f, 100.0f);
   // Camera matrix
   viewMatrix = glm::lookAt(
     position,           // Camera is here
