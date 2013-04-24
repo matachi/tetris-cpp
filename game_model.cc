@@ -46,8 +46,16 @@ void GameModel::update(Uint32 time, Direction direction) {
       move(figure_, UP);
       break;
     case LEFT:
+      move(figure_, LEFT);
+      if (collides_with_grid(figure_, blocks_)) {
+        move(figure_, RIGHT);
+      }
+      break;
     case RIGHT:
-      move(figure_, direction);
+      move(figure_, RIGHT);
+      if (collides_with_grid(figure_, blocks_)) {
+        move(figure_, LEFT);
+      }
       break;
     default:
       break;
@@ -84,6 +92,10 @@ bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block
   for (std::vector<Block*>::iterator it = figure.begin(); it != figure.end();
       ++it) {
     Block* a = *it;
+    if (a->get_x() < 0 || a->get_x() >= BLOCKS_IN_ROW || a->get_y() < 0 ||
+        a->get_y() > BLOCKS_IN_COL) {
+      return true;
+    }
     for (std::vector<Block*>::iterator it2 = blocks.begin();
         it2 != blocks.end(); ++it2) {
       Block* b = *it2;
@@ -94,6 +106,7 @@ bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block
       }
     }
   }
+  return false;
 }
 
 std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
