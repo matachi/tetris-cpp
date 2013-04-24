@@ -128,7 +128,7 @@ std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(4, 20, color, blocks, figure);
-      create_block(5, 21, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
       break;
     case 1: // 4 line
       color = {0.8f, 0.4, 0.6f};
