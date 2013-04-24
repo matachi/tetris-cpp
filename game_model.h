@@ -16,7 +16,7 @@ class GameModel {
 
     void init(void);
     void update(Uint32, Direction);
-    std::vector<Block*> get_blocks(void);
+    std::vector<Block*>& get_blocks(void);
     static const int NUM_OF_BLOCKS = 220;
     static const int BLOCKS_IN_ROW = 10;
     static const int BLOCKS_IN_COL = 22;

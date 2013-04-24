@@ -66,7 +66,7 @@ void GameModel::update(Uint32 time, Direction direction) {
   }
 }
 
-std::vector<Block*> GameModel::get_blocks(void) {
+std::vector<Block*>& GameModel::get_blocks(void) {
   return blocks_;
 }
 
