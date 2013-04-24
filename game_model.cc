@@ -1,6 +1,7 @@
 #include "game_model.h"
 
 #include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 
@@ -94,50 +95,59 @@ bool GameModel::collides_with_grid(std::vector<Block*> figure, std::vector<Block
 
 std::vector<Block*>* GameModel::create_figure(std::vector<Block*>* blocks) {
   std::vector<Block*>* figure = new std::vector<Block*>;
-  int i = 2;
+  srand(time(NULL));
+  int i = rand() % 7;
+  std::cout << i << std::endl;
   GLcolor color;
   switch (i) {
-    case 1: // Square
+    case 0: // Square
       color = {0.2f, 0.4, 0.6f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(4, 20, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       break;
-    case 2: // 4 line
+    case 1: // 4 line
       color = {0.8f, 0.4, 0.6f};
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       create_block(5, 18, color, blocks, figure);
       break;
-    case 3:
+    case 2:
       color = {0.8f, 0.4, 0.2f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(6, 20, color, blocks, figure);
       break;
-    case 4:
+    case 3:
       color = {0.2f, 0.4, 0.2f};
       create_block(4, 20, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(6, 21, color, blocks, figure);
       break;
-    case 5:
+    case 4:
       color = {0.8f, 0.4, 0.6f};
       create_block(4, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
       break;
-    case 6:
+    case 5:
       color = {0.8f, 0.4, 0.6f};
       create_block(6, 21, color, blocks, figure);
       create_block(5, 21, color, blocks, figure);
       create_block(5, 20, color, blocks, figure);
       create_block(5, 19, color, blocks, figure);
+      break;
+    case 6:
+      color = {0.8f, 0.4, 0.6f};
+      create_block(4, 20, color, blocks, figure);
+      create_block(5, 20, color, blocks, figure);
+      create_block(5, 21, color, blocks, figure);
+      create_block(6, 20, color, blocks, figure);
       break;
   }
 }
