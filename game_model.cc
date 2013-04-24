@@ -31,6 +31,11 @@ void GameModel::update(Uint32 time, Direction direction) {
   switch (direction) {
     case UP:
       rotate_figure(figure_);
+      while (!collides_with_grid(figure_, blocks_)) {
+        rotate_figure(figure_);
+        rotate_figure(figure_);
+        rotate_figure(figure_);
+      }
       break;
     case DOWN:
       while (!collides_with_grid(figure_, blocks_)) {
