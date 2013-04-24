@@ -22,7 +22,7 @@ glm::mat4 getProjectionMatrix(){
 
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3( 5, 0, 15 );
+glm::vec3 position = glm::vec3( 5, 10, 55 );
 // Initial horizontal angle : toward -Z
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
@@ -92,23 +92,23 @@ bool computeMatricesFromInputs(SDL_Window *window, Uint8* state){
   glm::vec3 up = glm::cross( right, direction );
 
   //Uint8 *state = SDL_GetKeyboardState(NULL);
-        if (state[SDL_SCANCODE_UP]){
+        if (state[SDL_SCANCODE_W]){
         //if (keys.up) {
         //std::cout << "OUT" << std::endl;
           position += direction * deltaTime * speed;
         }
         // Move backward
-        if (state[SDL_SCANCODE_DOWN]){
+        if (state[SDL_SCANCODE_S]){
         //if (keys.down) {
           position -= direction * deltaTime * speed;
         }
         // Strafe right
-        if (state[SDL_SCANCODE_RIGHT]){
+        if (state[SDL_SCANCODE_A]){
         //if (keys.right){
           position += right * deltaTime * speed;
         }
         // Strafe left
-        if (state[SDL_SCANCODE_LEFT]){
+        if (state[SDL_SCANCODE_D]){
         //if (keys.left){
           position -= right * deltaTime * speed;
         }
