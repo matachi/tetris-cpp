@@ -28,13 +28,6 @@ void GameModel::init(void) {
 }
 
 void GameModel::update(Uint32 time, Direction direction) {
-  if (time > next_tick_) {
-    next_tick_ += 1000;
-    move(figure_, DOWN);
-    if (collides_with_grid(figure_, blocks_)) {
-      move(figure_, UP);
-    }
-  }
   switch (direction) {
     case UP:
       rotate_figure(figure_);
@@ -44,6 +37,7 @@ void GameModel::update(Uint32 time, Direction direction) {
         move(figure_, DOWN);
       }
       move(figure_, UP);
+      figure_ = *create_figure(&blocks_);
       break;
     case LEFT:
       move(figure_, LEFT);
@@ -57,7 +51,15 @@ void GameModel::update(Uint32 time, Direction direction) {
         move(figure_, LEFT);
       }
       break;
-    default:
+    case NONE:
+      if (time > next_tick_) {
+        next_tick_ += 1000;
+        move(figure_, DOWN);
+        if (collides_with_grid(figure_, blocks_)) {
+          move(figure_, UP);
+          figure_ = *create_figure(&blocks_);
+        }
+      }
       break;
   }
   delete_full_rows(blocks_);
