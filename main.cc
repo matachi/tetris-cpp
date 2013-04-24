@@ -2,7 +2,6 @@
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-#include <iostream>
 
 // Include GLM
 #include <glm/glm.hpp>
@@ -14,7 +13,6 @@
 
 #include "game_model.h"
 #include "block.h"
-using namespace std;
 
 
 SDL_Window* init_window(void) {
