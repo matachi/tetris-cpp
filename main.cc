@@ -53,19 +53,6 @@ int main(int argc, char* argv[]){
   SDL_Window* window = init_window();
   init_opengl();
 
-  // position
-  //glm::vec3 position = glm::vec3( 0, 0, 5 );
-  //glm::vec3 position = glm::vec3( 0, 0, 0 );
-  // horizontal angle : toward -Z
-  float horizontalAngle = 3.14f;
-  // vertical angle : 0, look at the horizon
-  float verticalAngle = 0.0f;
-  // Initial Field of View
-  float initialFoV = 45.0f;
-
-  float speed = 3.0f; // 3 units / second
-  float mouseSpeed = 0.005f;
-
   // Create and compile our GLSL program from the shaders
   GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader",
       "SimpleFragmentShader.fragmentshader" );
@@ -152,9 +139,6 @@ int main(int argc, char* argv[]){
       0.982f,  0.099f,  0.879f
   };
 
-  //glBindAttribLocation(programID, 0, "vertexPosition_modelspace");
-  //glBindAttribLocation(programID, 1, "vertexColor");
-
   GLuint VertexArrayID;
   glGenVertexArrays(1, &VertexArrayID);
   glBindVertexArray(VertexArrayID);
@@ -173,43 +157,11 @@ int main(int argc, char* argv[]){
   );
   glEnableVertexAttribArray(0);
 
-  //GLuint vertexColor = glGetAttribLocation(programID, "vertexColor");
-  //cout << (int)vertexColor << endl;
-  //cout << glGetAttribLocation(programID, "vertexPosition_modelspace") << endl;
-  //GLuint colorbuffer;
-  //glGenBuffers(1, &colorbuffer);
-  //glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-  //glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-  //glVertexAttribPointer(
-  //    glGetAttribLocation(programID, "vertexColor"),        // attribute. No particular reason for 1, but must match the layout in the shader.
-  //    3,        // size
-  //    GL_FLOAT, // type
-  //    GL_FALSE, // normalized?
-  //    0,        // stride
-  //    (void*)0  // array buffer offset
-  //);
-  //glEnableVertexAttribArray(1);
-
   glBindVertexArray(0);
 
   // Get a handle for our "MVP" uniform
   GLuint MatrixID = glGetUniformLocation(programID, "MVP");
   GLuint vertexColor = glGetUniformLocation(programID, "vertexColor");
-
-  // Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit
-  // <-> 100 units
-  glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-  // Camera matrix
-  glm::mat4 View = glm::lookAt(
-      glm::vec3(5,0,5), // Camera is at (4,3,3), in World Space
-      glm::vec3(5,0,0), // and looks at the origin
-      glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-  );
-  // Model matrix : an identity matrix (model will be at the origin)
-  glm::mat4 Model = glm::mat4(1500.0f);
-  // Our ModelViewProjection : multiplication of our 3 matrices
-  glm::mat4 MVP = Projection * View * Model; // Remember, matrix multiplication
-                                             // is the other way around
 
 
   SDL_Event event;
@@ -217,8 +169,6 @@ int main(int argc, char* argv[]){
   model.init();
   glUseProgram(programID);
   GameModel::Direction previousDirection = GameModel::NONE;
-  //glGetAttribLocation(programID, "vertexColor");
-  //    glVertexAttrib3f(glGetAttribLocation(programID, "vertexColor"), color.r, color.g, color.b);
 
   while (true) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
