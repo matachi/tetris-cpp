@@ -3,6 +3,8 @@ README
 
 Daniel 'MaTachi' Jonsson
 
+[![Screenshot](resources/video_screenshot.png)](https://youtu.be/bR8GbbcmP_Y)
+
 The code is based on the n00b tutorials found on
 [opengl-tutorials.org](http://www.opengl-tutorial.org/). [Tutorial: OpenGL 3.1
 The First Triangle
