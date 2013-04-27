@@ -107,7 +107,7 @@ int main(int argc, char* argv[]){
   glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data),
       g_vertex_buffer_data, GL_STATIC_DRAW);
-  GLuint index = glGetAttribLocation(programId, "vertexPosition_modelspace");
+  GLuint index = glGetAttribLocation(programId, "vertexPosition");
   glVertexAttribPointer(
      index,     // index
      3,         // size
