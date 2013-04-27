@@ -21,8 +21,8 @@ also confirmed to work with newer/better GPUs, more specifically Nvidia 660.
   files are probably unnecessary in this project's context and could be
 deleted. The original files can be found
 [here](http://code.google.com/p/opengl-tutorial-org/source/browse/#hg%2Fcommon).
-* **/external**: Contains the libraries GLEW, GLM, GLFW, AntTweakBar and VRAC
-  Cmake Modules. The latter three are probably not needed in this project's
+* **/external**: Contains the libraries GLEW, GLM, GLFW and VRAC
+  Cmake Modules. The latter two are probably not needed in this project's
 context, but were also included from
 [opengl-tutorial.org](http://code.google.com/p/opengl-tutorial-org/source/browse/external).
 * **/**: Files mostly written by myself.
