@@ -15,6 +15,18 @@ on Windows, so with 99.99 % probability it won't compile there.
 The shaders are written in GLSL 1.30, so it's runnable on Intel HD3000. It's
 also confirmed to work with newer/better GPUs, more specifically Nvidia 660.
 
+## Directories
+
+* **/common**: Contains code from opengl-tutorials.org. However, most of the
+  files are probably unnecessary in this project's context and could be
+deleted. The original files can be found
+[here](http://code.google.com/p/opengl-tutorial-org/source/browse/#hg%2Fcommon).
+* **/external**: Contains the libraries GLEW, GLM, GLFW, AntTweakBar and VRAC
+  Cmake Modules. The latter three are probably not needed in this project's
+context, but were also included from
+[opengl-tutorial.org](http://code.google.com/p/opengl-tutorial-org/source/browse/external).
+* **/**: Files mostly written by myself.
+
 ## Compile
 
 Install dependencies for compiling: `sudo apt-get install cmake build-essential
