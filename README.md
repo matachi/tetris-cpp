@@ -49,3 +49,5 @@ How to compile and run the game: `cd build/ ; make ; cd .. ; ./build/Main`
 * **W/A/S/D**: Move around the camera.
 * **E/Q**: Increase/Decrease FoV (field of view).
 * **Escape**: Close the game with the escape key.
+
+[![Screenshot](resources/screenshot.png)](resources/screenshot.png)
