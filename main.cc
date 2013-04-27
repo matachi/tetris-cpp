@@ -176,7 +176,7 @@ int main(int argc, char* argv[]){
 
       glm::mat4 modelMatrix = glm::mat4(1.0);
       modelMatrix = modelMatrix * glm::translate(glm::mat4(1.0f),
-          glm::vec3(2 * block->get_x(), 2 * block->get_y(), 0.0f));
+          glm::vec3(2 * block->get_x() - 10, 2 * block->get_y() - 15, 0.0f));
       glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
 
       // 1rst attribute buffer : vertices
