@@ -36,3 +36,14 @@ mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev`
 First time configuration: `mkdir build ; cd build ; cmake .. ; cd ..`
 
 How to compile and run the game: `cd build/ ; make ; cd .. ; ./build/Main`
+
+## Controls
+
+* **Left arrow key**: Move block left.
+* **Right arrow key**: Move block right.
+* **Up arrow key**: Rotate block.
+* **Down arrow key**: Move down block instantaneously.
+* **Mouse**: Change camera direction.
+* **W/A/S/D**: Move around the camera.
+* **E/Q**: Increase/Decrease FoV (field of view).
+* **Escape**: Close the game with the escape key.
