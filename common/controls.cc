@@ -84,11 +84,11 @@ void computeMatricesFromInputs(SDL_Window *window, Uint8* state) {
     position -= direction * deltaTime * speed;
   }
   // Strafe right
-  if (state[SDL_SCANCODE_A]){
+  if (state[SDL_SCANCODE_D]){
     position += right * deltaTime * speed;
   }
   // Strafe left
-  if (state[SDL_SCANCODE_D]){
+  if (state[SDL_SCANCODE_A]){
     position -= right * deltaTime * speed;
   }
 
