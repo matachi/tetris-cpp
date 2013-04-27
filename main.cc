@@ -37,7 +37,7 @@ void destroy_window(SDL_Window* window) {
 void init_opengl(void) {
   glewExperimental = true;
   glewInit();
-  glClearColor(0.6f, 0.2f, 0.2f, 0.0f);
+  glClearColor(0.71f, 0.82f, 0.65f, 0.0f);
 
   // Enable depth test
   glEnable(GL_DEPTH_TEST);
