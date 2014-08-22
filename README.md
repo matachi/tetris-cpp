@@ -32,7 +32,7 @@ context, but were also included from
 ## Compile
 
 Install dependencies for compiling: `sudo apt-get install cmake build-essential
-mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev`  
+mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev libxrandr-dev libsdl1.2dev`  
 (Not completely sure if mesa-common-dev actually is needed)
 
 First time configuration: `mkdir build ; cd build ; cmake .. ; cd ..`

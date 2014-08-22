@@ -140,7 +140,7 @@ int main(int argc, char* argv[]){
     while (SDL_PollEvent(&event)) {}
 
     // Poll keyboard to check which keys are pressed
-    Uint8 *state = SDL_GetKeyboardState(NULL);
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
 
     GameModel::Direction direction = GameModel::NONE;
     if (state[SDL_SCANCODE_UP]) {

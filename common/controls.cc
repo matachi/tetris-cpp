@@ -38,7 +38,7 @@ double lastTime;
 SDL_Event event;
 
 
-void computeMatricesFromInputs(SDL_Window *window, Uint8* state) {
+void computeMatricesFromInputs(SDL_Window *window, const Uint8* state) {
 
   // Compute time difference between current and last frame
   double currentTime = SDL_GetTicks();
